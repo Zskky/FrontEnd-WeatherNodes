@@ -75,5 +75,5 @@ jobs:
         with:
           app-name: 'WeatherNodesInitiative'
           slot-name: 'Production'
-          package: .
+          package: release.zip
           
