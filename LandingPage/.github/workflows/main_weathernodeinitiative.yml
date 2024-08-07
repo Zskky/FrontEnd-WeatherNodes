@@ -1,0 +1,56 @@
+name: Build and Deploy React App
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on push to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Specify the operating system for the job
+
+    steps:
+      # Step 1: Checkout code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Specify the Node.js version to use
+
+      # Step 3: Install npm dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Build the React app
+      - name: Build the React app
+        run: npm run build
+
+      # Step 5: Upload the build artifacts for the next job
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build  # Name the artifact as 'build'
+          path: build  # Specify the path to the build directory
+
+  deploy:
+    needs: build  # Specify that the deploy job depends on the successful completion of the build job
+    runs-on: ubuntu-latest  # Specify the operating system for the job
+
+    steps:
+      # Step 1: Download the build artifacts from the build job
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build  # Specify the artifact name to download
+
+      # Step 2: Deploy to Azure Web App
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: <your-frontend-web-app-name>  # Replace with your Azure web app name
+          slot-name: production  # Specify the deployment slot
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Use the secret for the publish profile
+          package: build  # Specify the path to the build directory for deployment
