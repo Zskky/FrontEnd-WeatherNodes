@@ -14,27 +14,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repository
       - uses: actions/checkout@v4
 
+      # Set up Node.js environment
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
+      # Install dependencies, build, and test the application
       - name: npm install, build, and test
         run: |
           npm install
           npm run build --if-present
           npm run test --if-present
       
-      #zip directory
+      # Zip the build directory for deployment
       - name: Zip Release
-        uses: TheDoctor0/zip-release@0.7.6
-        with:
-          # Filename for archive
-          filename: release.zip
-          path: ./build/*
-
+        run: |
+          zip -r release.zip build/
+      
+      # Upload the zip artifact for the deployment job
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -51,14 +52,17 @@ jobs:
       id-token: write #This is required for requesting the JWT
 
     steps:
+      # Download the zip artifact from the build job
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: node-app
 
+      # Unzip the artifact for deployment
       - name: Unzip artifact for deployment
-        run: unzip release.zip -d release
+        run: unzip node-app.zip
       
+      # Login to Azure using service principal
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -66,11 +70,11 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6D92CC9ACAEF49E1A028A05ACC7156A6 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_792C41D5FDE945E7A32E791B2199AC7D }}
 
+      # Deploy the app to Azure Web App
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'WeatherNodesInitiative'
           slot-name: 'Production'
-          package: release/release.zip
-          
+          package: node-app.zip
