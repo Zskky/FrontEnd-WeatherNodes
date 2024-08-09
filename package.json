@@ -2,7 +2,7 @@
   "name": "landingpage-react-template",
   "private": true,
   
-  
+
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -19,7 +19,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --passWithNoTests",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "serve": "serve -s build"
   },
   "eslintConfig": {
     "extends": "react-app"
