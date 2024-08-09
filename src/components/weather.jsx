@@ -11,7 +11,7 @@ const Weather = () => {
   const [error, setError] = useState(null);
   const [localTime, setLocalTime] = useState('');
 
-  const apiKey = "06d432944c8b2429b0cec5fd03b4d6db"; // Replace with your actual API key
+  //const apiKey = "06d432944c8b2429b0cec5fd03b4d6db"; // Replace with your actual API key
 
   const initializeMap = useCallback((lat, lon) => {
     if (!map) {
@@ -29,19 +29,21 @@ const Weather = () => {
 
   const fetchWeatherData = useCallback((lat, lon) => {
     axios
-      .get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
+      .get(`https://ibas.azurewebsites.net/get-weather`, {
+        params: { lat, lon }
+      })
       .then((response) => {
         console.log('API response:', response.data);
         const data = response.data;
         setWeatherData({
           country: data.sys.country,
-          temp_c: data.main.temp,
+          temp_c: data.main.temp - 273.15, // Convert Kelvin to Celsius
           lat: data.coord.lat,
           lon: data.coord.lon,
           name: data.name,
           condition: data.weather[0].description,
           humidity: data.main.humidity,
-          wind_kph: data.wind.speed,
+          wind_kph: data.wind.speed * 3.6, // Convert m/s to km/h
           icon: `https://openweathermap.org/img/w/${data.weather[0].icon}.png`,
         });
 
@@ -54,7 +56,7 @@ const Weather = () => {
         console.error('Error fetching weather data:', error);
         setError('Failed to fetch weather data. Please try again later.');
       });
-  }, [apiKey, map, marker]);
+  }, [map, marker]);
 
   useEffect(() => {
     const showPosition = (position) => {
