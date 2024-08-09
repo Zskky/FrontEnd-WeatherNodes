@@ -8,7 +8,7 @@ import { Gallery } from "./components/gallery";
 //import { Testimonials } from "./components/testimonials";
 import { Team } from "./components/Team";
 import { Contact } from "./components/contact";
-import Weather from "./components/weather"; // Ensure the path and case are correct
+import Weather from "./components/weather";
 //import WeaHis from "./components/weaHis";
 import JsonData from "./data/data.json";
 import SmoothScroll from "smooth-scroll";
