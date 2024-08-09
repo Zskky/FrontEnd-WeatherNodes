@@ -24,17 +24,11 @@ jobs:
           npm install cross-env --save-dev
           npm run build --if-present
 
-      - name: Zip the build folder
-        run: zip -r release.zip ./*
-
-      - name: List files after zip creation
-        run: ls -al
-
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: release-zip
-          path: release.zip
+          name: node-app
+          path: build/
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,10 +43,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: release-zip
-
-      - name: Verify content of the release.zip
-        run: unzip -l release.zip
+          name: node-app
 
       - name: Login to Azure
         uses: azure/login@v2
