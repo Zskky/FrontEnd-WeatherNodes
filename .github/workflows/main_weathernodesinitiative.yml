@@ -27,11 +27,14 @@ jobs:
       - name: List files in build directory for verification
         run: ls -la build
 
+      - name: Compress build directory
+        run: zip -r build.zip build/
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: build/
+          path: build.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,7 +50,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
-
+      - name: Unzip build artifact
+        run: unzip node-app/build.zip
+        
       - name: Login to Azure
         uses: azure/login@v2
         with:
