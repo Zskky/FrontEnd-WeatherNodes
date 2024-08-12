@@ -9,7 +9,7 @@ import { Gallery } from "./components/gallery";
 import { Team } from "./components/Team";
 import { Contact } from "./components/contact";
 import Weather from "./components/weather";
-//import WeaHis from "./components/weaHis";
+import WeaSea from "./components/weaSea";
 import JsonData from "./data/data.json";
 import SmoothScroll from "smooth-scroll";
 import "./App.css";
@@ -34,13 +34,13 @@ const App = () => {
       <Navigation />
       <Header data={landingPageData.Header} />
       <Weather data={landingPageData.Weather}/>
+      <WeaSea data={landingPageData.WeaSea}/>
       <Features data={landingPageData.Features} />
       <Services data={landingPageData.Services} />
       <About data={landingPageData.About} />
       <Gallery data={landingPageData.Gallery} />
       {/*<Testimonials data={landingPageData.Testimonials} />*/}
       <Team data={landingPageData.Team} />
-      {/*<WeaHis data={landingPageData.WeaHis}/>*/}
       <Contact data={landingPageData.Contact} />
     </div>
   );
