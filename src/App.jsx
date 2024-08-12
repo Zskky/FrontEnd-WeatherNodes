@@ -22,7 +22,11 @@ export const scroll = new SmoothScroll('a[href*="#"]', {
 const App = () => {
   const [landingPageData, setLandingPageData] = useState({});
   useEffect(() => {
+    //set landing page JSON file
     setLandingPageData(JsonData);
+
+    // Set the document title
+    document.title = "WeatherNodes Initiative";
   }, []);
 
   return (
