@@ -3,4 +3,4 @@ platform = "nodejs"
 version = "14.18.1"
 
 [package]
-directory = "./"
+directory = "./wwwroot"
