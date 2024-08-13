@@ -30,11 +30,13 @@ const Weather = () => {
       });
   }, []);
 
-  const handleSearch = () => {
+  const handleSearch = (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
     if (location.trim() === '') {
       setError('Please enter a valid capital city.');
       return;
     }
+    setError(null); // Clear any previous errors
     fetchWeatherData(location);
   };
 
@@ -54,16 +56,18 @@ const Weather = () => {
   return (
     <div id="weather" className="weather-container">
       <div className="search-container">
-        <input
-          type="text"
-          id="location-input"
-          placeholder="Enter capital city"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-        />
-        <button id="search-button" onClick={handleSearch}>
-          Search
-        </button>
+        <form onSubmit={handleSearch}>
+          <input
+            type="text"
+            id="location-input"
+            placeholder="Enter capital city"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
+          <button type="button" id="search-button" onClick={handleSearch}>
+            Search
+          </button>
+        </form>
       </div>
       {error && <div className="error">{error}</div>}
       <div className="weather-grid">
