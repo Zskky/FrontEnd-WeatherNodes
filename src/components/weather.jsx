@@ -4,14 +4,12 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 const Weather = () => {
-  const [location, setLocation] = useState('');
+  const [capital, setCapital] = useState('Singapore'); // Hard-coded capital
   const [weatherData, setWeatherData] = useState({});
   const [map, setMap] = useState(null);
   const [marker, setMarker] = useState(null);
   const [error, setError] = useState(null);
   const [localTime, setLocalTime] = useState('');
-
-  //const apiKey = "06d432944c8b2429b0cec5fd03b4d6db"; // Replace with your actual API key
 
   const initializeMap = useCallback((lat, lon) => {
     if (!map) {
@@ -27,71 +25,45 @@ const Weather = () => {
     }
   }, [map]);
 
-  const fetchWeatherData = useCallback((lat, lon) => {
+  const fetchWeatherData = useCallback((capital) => {
     axios
       .get(`https://ibas.azurewebsites.net/get-weather`, {
-        params: { lat, lon }
+        params: { capital, apikey: '58c8f6da-98b4-4c4b-bfa7-5b52f09ea139' }
       })
       .then((response) => {
-        console.log('API response:', response.data);
+        console.log('API response:', response.data); // Log the entire response for debugging
         const data = response.data;
+
+        // Update state with the relevant fields from the API response
         setWeatherData({
-          country: data.sys.country,
-          temp_c: data.main.temp - 273.15, // Convert Kelvin to Celsius
-          lat: data.coord.lat,
-          lon: data.coord.lon,
-          name: data.name,
-          condition: data.weather[0].description,
-          humidity: data.main.humidity,
-          wind_kph: data.wind.speed * 3.6, // Convert m/s to km/h
-          icon: `https://openweathermap.org/img/w/${data.weather[0].icon}.png`,
+          temperature: data.temperature || 'N/A',
+          humidity: data.humidity || 'N/A',
+          pressure: data.pressure || 'N/A',
+          windSpeed: data.windSpeed || 'N/A',
+          cloudCover: data.cloudCover || 'N/A',
+          precipitation: data.precipitation || 'N/A',
         });
 
+        // You may need to manually set lat/lon for the map if it's not returned by the API
+        const lat = 1.3521; // Example latitude for Singapore
+        const lon = 103.8198; // Example longitude for Singapore
         if (marker) {
-          marker.setLatLng([data.coord.lat, data.coord.lon]).update();
-          map.setView([data.coord.lat, data.coord.lon]);
+          marker.setLatLng([lat, lon]).update();
+          map.setView([lat, lon]);
+        } else {
+          initializeMap(lat, lon);
         }
       })
       .catch((error) => {
         console.error('Error fetching weather data:', error);
         setError('Failed to fetch weather data. Please try again later.');
       });
-  }, [map, marker]);
+  }, [map, marker, initializeMap]);
 
   useEffect(() => {
-    const showPosition = (position) => {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      console.log(`Latitude: ${lat}, Longitude: ${lon}`);
-      fetchWeatherData(lat, lon);
-      initializeMap(lat, lon);
-    };
+    // Fetch weather data for the hard-coded capital
+    fetchWeatherData(capital);
 
-    const showError = (error) => {
-      switch (error.code) {
-        case error.PERMISSION_DENIED:
-          alert("User denied the request for Geolocation.");
-          break;
-        case error.POSITION_UNAVAILABLE:
-          alert("Location information is unavailable.");
-          break;
-        case error.TIMEOUT:
-          alert("The request to get user location timed out.");
-          break;
-        case error.UNKNOWN_ERROR:
-          alert("An unknown error occurred.");
-          break;
-        default:
-          alert("An unknown error occurred.");
-      }
-    };
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition, showError);
-    } else {
-      alert("Geolocation is not supported by this browser.");
-    }
- 
     const updateLocalTime = () => {
       const now = new Date();
       const localTimeString = now.toLocaleTimeString();
@@ -102,57 +74,32 @@ const Weather = () => {
     const intervalId = setInterval(updateLocalTime, 1000);
 
     return () => clearInterval(intervalId);
-    }, [fetchWeatherData, initializeMap]);
-
-    //const handleSearch = () => {
-      // You can use a geocoding API to convert the location name to lat/lon before fetching weather data
-      //fetchWeatherData(location);
-  //};
+  }, [capital, fetchWeatherData]);
 
   return (
     <div id="weather" className="weather-container">
       <div className="map-container" id="map-container">
         <div id="map" className="map"></div>
       </div>
-      <div className="search-container">
-        <input
-          type="hidden"
-          id="location-input"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-        />
-        {/*<button id="search-button" onClick={handleSearch}>
-          Search
-        </button>*/}
-      </div>
       {error && <div className="error">{error}</div>}
       <div className="weather-grid">
         <div className="weather-item">
-          <p>Country: {weatherData.country || 'N/A'}</p>
+          <p>Temperature: {weatherData.temperature !== 'N/A' ? `${weatherData.temperature} °C` : 'N/A'}</p>
         </div>
         <div className="weather-item">
-          <p>Temperature: {weatherData.temp_c !== undefined ? `${weatherData.temp_c} °C` : 'N/A'}</p>
+          <p>Humidity: {weatherData.humidity !== 'N/A' ? `${weatherData.humidity} %` : 'N/A'}</p>
         </div>
         <div className="weather-item">
-          <p>Latitude: {weatherData.lat || 'N/A'}</p>
+          <p>Pressure: {weatherData.pressure !== 'N/A' ? `${weatherData.pressure} hPa` : 'N/A'}</p>
         </div>
         <div className="weather-item">
-          <p>Longitude: {weatherData.lon || 'N/A'}</p>
+          <p>Wind Speed: {weatherData.windSpeed !== 'N/A' ? `${weatherData.windSpeed} km/h` : 'N/A'}</p>
         </div>
         <div className="weather-item">
-          <p>Location Name: {weatherData.name || 'N/A'}</p>
+          <p>Cloud Cover: {weatherData.cloudCover !== 'N/A' ? `${weatherData.cloudCover} %` : 'N/A'}</p>
         </div>
         <div className="weather-item">
-          <p>Condition: {weatherData.condition || 'N/A'}</p>
-        </div>
-        <div className="weather-item">
-          <p>Humidity: {weatherData.humidity || 'N/A'}</p>
-        </div>
-        <div className="weather-item">
-          <p>Wind Speed: {weatherData.wind_kph !== undefined ? `${weatherData.wind_kph} kph` : 'N/A'}</p>
-        </div>
-        <div className="weather-item">
-          <img src={weatherData.icon} alt="Weather Icon" />
+          <p>Precipitation: {weatherData.precipitation !== 'N/A' ? `${weatherData.precipitation} mm` : 'N/A'}</p>
         </div>
         <div className="weather-item">
           <p id="local-time">Local Time: {localTime}</p>

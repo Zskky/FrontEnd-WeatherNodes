@@ -7,24 +7,21 @@ const Weather = () => {
   const [error, setError] = useState(null);
   const [localTime, setLocalTime] = useState('');
 
-  const fetchWeatherData = useCallback((lat, lon) => {
+  const fetchWeatherData = useCallback((capital) => {
     axios
       .get(`https://ibas.azurewebsites.net/get-weather`, {
-        params: { lat, lon },
+        params: { capital, apikey: '58c8f6da-98b4-4c4b-bfa7-5b52f09ea139' }
       })
       .then((response) => {
         console.log('API response:', response.data);
         const data = response.data;
         setWeatherData({
-          country: data.sys.country,
-          temp_c: data.main.temp - 273.15, // Convert Kelvin to Celsius
-          lat: data.coord.lat,
-          lon: data.coord.lon,
-          name: data.name,
-          condition: data.weather[0].description,
-          humidity: data.main.humidity,
-          wind_kph: data.wind.speed * 3.6, // Convert m/s to km/h
-          icon: `https://openweathermap.org/img/w/${data.weather[0].icon}.png`,
+          temperature: data.temperature || 'N/A',
+          humidity: data.humidity || 'N/A',
+          pressure: data.pressure || 'N/A',
+          windSpeed: data.windSpeed || 'N/A',
+          cloudCover: data.cloudCover || 'N/A',
+          precipitation: data.precipitation || 'N/A',
         });
       })
       .catch((error) => {
@@ -34,19 +31,11 @@ const Weather = () => {
   }, []);
 
   const handleSearch = () => {
-    // Use a geocoding API or your own backend to convert the location to lat/lon
-    axios
-      .get('https://geocoding-api.com/api/v1/capital', {
-        params: { capital: location },
-      })
-      .then((response) => {
-        const { lat, lon } = response.data; // Assuming the API returns lat/lon
-        fetchWeatherData(lat, lon);
-      })
-      .catch((error) => {
-        console.error('Error fetching geocoding data:', error);
-        setError('Failed to fetch geocoding data. Please try again later.');
-      });
+    if (location.trim() === '') {
+      setError('Please enter a valid capital city.');
+      return;
+    }
+    fetchWeatherData(location);
   };
 
   useEffect(() => {
@@ -79,31 +68,22 @@ const Weather = () => {
       {error && <div className="error">{error}</div>}
       <div className="weather-grid">
         <div className="weather-item">
-          <p>Country: {weatherData.country || 'N/A'}</p>
+          <p>Temperature: {weatherData.temperature !== 'N/A' ? `${weatherData.temperature} °C` : 'N/A'}</p>
         </div>
         <div className="weather-item">
-          <p>Temperature: {weatherData.temp_c !== undefined ? `${weatherData.temp_c} °C` : 'N/A'}</p>
+          <p>Humidity: {weatherData.humidity !== 'N/A' ? `${weatherData.humidity} %` : 'N/A'}</p>
         </div>
         <div className="weather-item">
-          <p>Latitude: {weatherData.lat || 'N/A'}</p>
+          <p>Pressure: {weatherData.pressure !== 'N/A' ? `${weatherData.pressure} hPa` : 'N/A'}</p>
         </div>
         <div className="weather-item">
-          <p>Longitude: {weatherData.lon || 'N/A'}</p>
+          <p>Wind Speed: {weatherData.windSpeed !== 'N/A' ? `${weatherData.windSpeed} km/h` : 'N/A'}</p>
         </div>
         <div className="weather-item">
-          <p>Location Name: {weatherData.name || 'N/A'}</p>
+          <p>Cloud Cover: {weatherData.cloudCover !== 'N/A' ? `${weatherData.cloudCover} %` : 'N/A'}</p>
         </div>
         <div className="weather-item">
-          <p>Condition: {weatherData.condition || 'N/A'}</p>
-        </div>
-        <div className="weather-item">
-          <p>Humidity: {weatherData.humidity || 'N/A'}</p>
-        </div>
-        <div className="weather-item">
-          <p>Wind Speed: {weatherData.wind_kph !== undefined ? `${weatherData.wind_kph} kph` : 'N/A'}</p>
-        </div>
-        <div className="weather-item">
-          <img src={weatherData.icon} alt="Weather Icon" />
+          <p>Precipitation: {weatherData.precipitation !== 'N/A' ? `${weatherData.precipitation} mm` : 'N/A'}</p>
         </div>
         <div className="weather-item">
           <p id="local-time">Local Time: {localTime}</p>
