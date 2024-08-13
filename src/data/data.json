@@ -1,0 +1,171 @@
+{
+  "Header": {
+    "title": "Welcome to WeatherNode Initiative!",
+    "paragraph": "WeatherNode Initiative is a security API that helps to secure multiple weather sensors for the retrieval of secured weather data to the users."
+  },
+  "About": {
+    "paragraph": "WeatherNode Initiative was created to ensure that data transmission within Internet of Things is secured and protected during the transaction process of an apllication with IOT.", 
+    
+    "paragraph2":"The team focuses on weather sensors but will be further developing and experimenting with different IOT devices in the near future.",
+    
+    "Why": [
+      "Secured Connections",
+      "User-Friendly",
+      "Seamless Integration"
+    ],
+    "Why2": [
+      "Enhanced Security",
+      "Compacted Signatures",
+      "Fast Implementation"
+    ]
+  },
+  "Gallery": [
+    {
+      "title": "Project Title",
+      "largeImage": "img/portfolio/01-large.jpg",
+      "smallImage": "img/portfolio/01-small.jpg"
+    },
+    {
+      "title": "Project Title",
+      "largeImage": "img/portfolio/02-large.jpg",
+      "smallImage": "img/portfolio/02-small.jpg"
+    },
+    {
+      "title": "Project Title",
+      "largeImage": "img/portfolio/03-large.jpg",
+      "smallImage": "img/portfolio/03-small.jpg"
+    },
+    {
+      "title": "Project Title",
+      "largeImage": "img/portfolio/04-large.jpg",
+      "smallImage": "img/portfolio/04-small.jpg"
+    },
+    {
+      "title": "Project Title",
+      "largeImage": "img/portfolio/05-large.jpg",
+      "smallImage": "img/portfolio/05-small.jpg"
+    },
+    {
+      "title": "Project Title",
+      "largeImage": "img/portfolio/06-large.jpg",
+      "smallImage": "img/portfolio/06-small.jpg"
+    },
+    {
+      "title": "Project Title",
+      "largeImage": "img/portfolio/07-large.jpg",
+      "smallImage": "img/portfolio/07-small.jpg"
+    },
+    {
+      "title": "Project Title",
+      "largeImage": "img/portfolio/08-large.jpg",
+      "smallImage": "img/portfolio/08-small.jpg"
+    },
+    {
+      "title": "Project Title",
+      "largeImage": "img/portfolio/09-large.jpg",
+      "smallImage": "img/portfolio/09-small.jpg"
+    }
+  ],
+  "Services": [
+    {
+      "icon": "fa fa-key",
+      "name": "Aggregrated Signatures",
+      "text": "Signatrues are aggragrated and returned in a single package which imporves security and reduces overhead transmission during the transaction."
+    },
+    {
+      "icon": "fa fa-cloud",
+      "name": "Accurate Reading",
+      "text": "Through the API, we ensure accurate reading of weather data returns and ensure integrity of the data is intact and original to the pulling."
+    },
+    {
+      "icon": "fa fa-cloud-download",
+      "name": "Lorem ipsum dolor",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+    }
+  ],
+  "Testimonials": [
+    {
+      "img": "img/testimonials/01.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "John Doe"
+    },
+    {
+      "img": "img/testimonials/02.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "Johnathan Doe"
+    },
+    {
+      "img": "img/testimonials/03.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "John Doe"
+    },
+    {
+      "img": "img/testimonials/04.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "Johnathan Doe"
+    },
+    {
+      "img": "img/testimonials/05.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "John Doe"
+    },
+    {
+      "img": "img/testimonials/06.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "Johnathan Doe"
+    }
+  ],
+  "Team": [
+    {
+      "img": "img/team/Bhone.webp",
+      "name": "Bhone Thet Yaw",
+      "job": "Project Manager / Main Developer"
+    },
+    {
+      "img": "img/team/BingYa.webp",
+      "name": "Chua Bing Ya",
+      "job": "Developer"
+    },
+    {
+      "img": "img/team/Marcus.webp",
+      "name": "Marcus Teo Zhi Hao",
+      "job": "Main Administration"
+    },
+    {
+      "img": "img/team/Nazri.webp",
+      "name": "Mohammad Nazri Bin Nasir",
+      "job": "Developer, Administration"
+    }
+  ],
+  "Contact": {
+    "address": "461 Clementi Rd, Singapore 599491",
+    "phone": "+65 9555 2633 ",
+    "email": "weatherNodeInit@gmail.com",
+    "youtube": "youtube.com"
+  },
+  "Features": [
+    {
+      "icon": "fa fa-Heart",
+      "title": "Secured Connection",
+      "text": "API will do routine checks to ensure that any connection with IOT is secured and protected even when user is not using."
+    },
+    {
+      "icon": "fa fa-Key",
+      "title": "Aggregrated Signature",
+      "text": "All the sensors unique information are secured and returned through a single signature that is generated by our API which secures the information and returns to user."
+    },
+    {
+      "icon": "fa fa-arrow-down",
+      "title": "Minimal Downtime",
+      "text": "Through our system, downtime issue is minimise as the issues can be spotted as the API is tracking every step of the transaction till the information reach the end user."
+    },
+    {
+      "icon": "fa fa-magic",
+      "title": "Seamless Application",
+      "text": "User will not face trouble using the application or API are the handlers to do the activities requested by the users."
+    }
+  ],
+  "Weather": {
+
+  }
+}
