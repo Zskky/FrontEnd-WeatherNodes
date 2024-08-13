@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
-const Weather = () => {
+const SeaWeather = () => {
   const [location, setLocation] = useState('');
   const [weatherData, setWeatherData] = useState({});
   const [error, setError] = useState(null);
@@ -36,7 +36,7 @@ const Weather = () => {
       setError('Please enter a valid capital city.');
       return;
     }
-    setError(null); // Clear any previous errors
+    //setError(null); // Clear any previous errors
     fetchWeatherData(location);
   };
 
@@ -97,4 +97,4 @@ const Weather = () => {
   );
 };
 
-export default Weather;
+export default SeaWeather;
