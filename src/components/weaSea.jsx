@@ -36,7 +36,7 @@ const SeaWeather = () => {
       setError('Please enter a valid capital city.');
       return;
     }
-    //setError(null); // Clear any previous errors
+    setError(null); // Clear any previous errors
     fetchWeatherData(location);
   };
 
@@ -56,18 +56,16 @@ const SeaWeather = () => {
   return (
     <div id="weather" className="weather-container">
       <div className="search-container">
-        <form onSubmit={handleSearch}>
-          <input
-            type="text"
-            id="location-input"
-            placeholder="Enter capital city"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-          <button type="button" id="search-button" onClick={handleSearch}>
-            Search
-          </button>
-        </form>
+      <input
+          type="text"
+          id="location-input"
+          placeholder="Enter capital city"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+        />
+        <button type="button" id="search-button" onClick={handleSearch}>
+          Search
+        </button>
       </div>
       {error && <div className="error">{error}</div>}
       <div className="weather-grid">
