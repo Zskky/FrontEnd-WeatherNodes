@@ -9,7 +9,7 @@ const Weather = () => {
 
   const fetchWeatherData = useCallback((capital) => {
     axios
-      .get(`https://ibas.azurewebsites.net/get-weather`, {
+      .get(`https://ibas.azurewebsites.net/fetch-only`, {
         params: { capital, apikey: '58c8f6da-98b4-4c4b-bfa7-5b52f09ea139' }
       })
       .then((response) => {
