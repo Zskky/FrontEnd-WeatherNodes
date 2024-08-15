@@ -9,12 +9,15 @@ const SeaWeather = () => {
 
   const fetchWeatherData = useCallback((capital) => {
     axios
-      .get(`https://ibas.azurewebsites.net/fetch-only`, {
+      .get(`https://ibas.azurewebsites.net/fetch-store-weather`, {
         params: { capital, apikey: '58c8f6da-98b4-4c4b-bfa7-5b52f09ea139' }
       })
       .then((response) => {
-        console.log('API response:', response.data);
-        const data = response.data;
+        console.log('API response:', response.data); // Log the entire response for debugging
+        
+        if (response.data.valid) {  // Check if the response is valid
+          const data = response.data.averages;  // Access the averages object
+
         setWeatherData({
           temperature: data.temperature || 'N/A',
           humidity: data.humidity || 'N/A',
@@ -23,6 +26,7 @@ const SeaWeather = () => {
           cloudCover: data.cloudCover || 'N/A',
           precipitation: data.precipitation || 'N/A',
         });
+      }
       })
       .catch((error) => {
         console.error('Error fetching weather data:', error);
@@ -39,19 +43,6 @@ const SeaWeather = () => {
     setError(null); // Clear any previous errors
     fetchWeatherData(location);
   };
-
-  useEffect(() => {
-    const updateLocalTime = () => {
-      const now = new Date();
-      const localTimeString = now.toLocaleTimeString();
-      setLocalTime(localTimeString);
-    };
-
-    updateLocalTime();
-    const intervalId = setInterval(updateLocalTime, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
 
   return (
     <div id="weather" className="weather-container">

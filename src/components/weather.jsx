@@ -4,7 +4,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 const Weather = () => {
-  const [capital, setCapital] = useState('Singapore'); // Hard-coded capital
+  const [capital] = useState('Singapore'); // Hard-coded capital
   const [weatherData, setWeatherData] = useState({});
   const [map, setMap] = useState(null);
   const [marker, setMarker] = useState(null);
@@ -27,12 +27,14 @@ const Weather = () => {
 
   const fetchWeatherData = useCallback((capital) => {
     axios
-      .get(`https://ibas.azurewebsites.net/get-weather`, {
+      .get(`https://ibas.azurewebsites.net/fetch-only`, {
         params: { capital, apikey: '58c8f6da-98b4-4c4b-bfa7-5b52f09ea139' }
       })
       .then((response) => {
         console.log('API response:', response.data); // Log the entire response for debugging
-        const data = response.data;
+        
+        if (response.data.valid) {  // Check if the response is valid
+          const data = response.data.averages;  // Access the averages object
 
         // Update state with the relevant fields from the API response
         setWeatherData({
@@ -53,6 +55,9 @@ const Weather = () => {
         } else {
           initializeMap(lat, lon);
         }
+      } else {
+        setError('Invalid weather data response.');
+      }
       })
       .catch((error) => {
         console.error('Error fetching weather data:', error);
