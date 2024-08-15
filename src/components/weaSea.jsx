@@ -9,7 +9,7 @@ const SeaWeather = () => {
 
   const fetchWeatherData = useCallback((capital) => {
     axios
-      .get(`https://ibas.azurewebsites.net/fetch-store-weather`, {
+      .get(`https://ibas.azurewebsites.net/fetch-only`, {
         params: { capital, apikey: '58c8f6da-98b4-4c4b-bfa7-5b52f09ea139' }
       })
       .then((response) => {
@@ -77,9 +77,6 @@ const SeaWeather = () => {
         </div>
         <div className="weather-item">
           <p>Precipitation: {weatherData.precipitation !== 'N/A' ? `${weatherData.precipitation} mm` : 'N/A'}</p>
-        </div>
-        <div className="weather-item">
-          <p id="local-time">Local Time: {localTime}</p>
         </div>
       </div>
     </div>
