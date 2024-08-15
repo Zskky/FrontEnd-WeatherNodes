@@ -17,7 +17,7 @@ const Weather = () => {
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      }).addTo(newMap)
+      }).addTo(newMap);
 
       const newMarker = L.marker([lat, lon]).addTo(newMap);
       setMap(newMap);
@@ -36,28 +36,28 @@ const Weather = () => {
         if (response.data.valid) {  // Check if the response is valid
           const data = response.data.averages;  // Access the averages object
 
-        // Update state with the relevant fields from the API response
-        setWeatherData({
-          temperature: data.temperature || 'N/A',
-          humidity: data.humidity || 'N/A',
-          pressure: data.pressure || 'N/A',
-          windSpeed: data.windSpeed || 'N/A',
-          cloudCover: data.cloudCover || 'N/A',
-          precipitation: data.precipitation || 'N/A',
-        });
+          // Update state with the relevant fields from the API response
+          setWeatherData({
+            temperature: data.temperature || 'N/A',
+            humidity: data.humidity || 'N/A',
+            pressure: data.pressure || 'N/A',
+            windSpeed: data.windSpeed || 'N/A',
+            cloudCover: data.cloudCover || 'N/A',
+            precipitation: data.precipitation || 'N/A',
+          });
 
-        // You may need to manually set lat/lon for the map if it's not returned by the API
-        const lat = 1.3521; // Example latitude for Singapore
-        const lon = 103.8198; // Example longitude for Singapore
-        if (marker) {
-          marker.setLatLng([lat, lon]).update();
-          map.setView([lat, lon]);
+          // Manually set lat/lon for the map if it's not returned by the API
+          const lat = 1.3521; // Example latitude for Singapore
+          const lon = 103.8198; // Example longitude for Singapore
+          if (marker) {
+            marker.setLatLng([lat, lon]).update();
+            map.setView([lat, lon]);
+          } else {
+            initializeMap(lat, lon);
+          }
         } else {
-          initializeMap(lat, lon);
+          setError('Invalid weather data response.');
         }
-      } else {
-        setError('Invalid weather data response.');
-      }
       })
       .catch((error) => {
         console.error('Error fetching weather data:', error);
