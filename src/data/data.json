@@ -78,9 +78,9 @@
       "text": "Through the API, we ensure accurate reading of weather data returns and ensure integrity of the data is intact and original to the pulling."
     },
     {
-      "icon": "fa fa-cloud-download",
-      "name": "Lorem ipsum dolor",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+      "icon": "fa fa-history",
+      "name": "Historical Records",
+      "text": "Data is recorded and secured if needed to be reuse again. Validations and checks will be done to ensure integrity is ensure before data is returned to users."
     }
   ],
   "Team": [
@@ -134,6 +134,12 @@
     }
   ],
   "Weather": {
+
+  },
+  "weaSea": {
+
+  },
+  "weaHis": {
 
   }
 }

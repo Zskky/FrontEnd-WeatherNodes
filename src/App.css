@@ -9,7 +9,9 @@
   #team,
   #contact,
   #footer,
-  #weather {
+  #weather,
+  #weaHis,
+  #weaSea {
     width: 111%;
   }
 

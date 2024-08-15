@@ -9,6 +9,7 @@ import { Team } from "./components/Team";
 import { Contact } from "./components/contact";
 import Weather from "./components/weather";
 import WeaSea from "./components/weaSea";
+import WeaHis from "./components/weaHis";
 import FetchWeather from "./components/fetchWeather";
 import JsonData from "./data/data.json";
 import SmoothScroll from "smooth-scroll";
@@ -17,6 +18,10 @@ import "./App.css";
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,
   speedAsDuration: true,
+  offset: function (anchor, toggle) {
+    // Ensure the section lands at the top of the viewport
+    return 0;  // No offset, scrolls to the top of the section
+  },
 });
 
 const App = () => {
@@ -35,6 +40,7 @@ const App = () => {
       <Header data={landingPageData.Header} />
       <Weather data={landingPageData.Weather}/>
       <WeaSea data={landingPageData.WeaSea}/>
+      <WeaHis data={landingPageData.WeaHis}/>
       <Features data={landingPageData.Features} />
       <Services data={landingPageData.Services} />
       <About data={landingPageData.About} />

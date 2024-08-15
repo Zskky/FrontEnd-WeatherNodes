@@ -396,46 +396,6 @@ header .intro-text {
 .hover-bg:hover .hover-text {
   opacity: 1;
 }
-/* Testimonials Section */
-#testimonials {
-  padding: 100px 0;
-  background: #f6f6f6;
-}
-#testimonials i {
-  color: #e6e6e6;
-  font-size: 32px;
-  margin-bottom: 20px;
-}
-.testimonial {
-  position: relative;
-  padding: 20px;
-}
-.testimonial-image {
-  float: left;
-  margin-right: 15px;
-}
-.testimonial-image,
-.testimonial-image img {
-  display: block;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-}
-.testimonial-content {
-  position: relative;
-  overflow: hidden;
-}
-.testimonial-content p {
-  margin-bottom: 0;
-  font-size: 14px;
-  font-style: italic;
-}
-.testimonial-meta {
-  margin-top: 10px;
-  font-size: 15px;
-  font-weight: 600;
-  color: #666;
-}
 /* Team Section */
 #team {
   padding: 100px 0;
@@ -602,13 +562,18 @@ label {
   }
 }
 
-/* Weather.css */
+/* Weather */
 .weather-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  padding: 100px 0px 100px 0px;
+  background: linear-gradient(to right, #616161 25%, #dadada 100%);
 }  
+
+.weather-container h2 {
+  color: #ffffff;
+}
 
 .map-container {
   width: 100%;
@@ -650,7 +615,7 @@ label {
 }
 
 .weather-item {
-  background: #f0f0f0;
+  background: #fffbc9;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
@@ -666,4 +631,72 @@ label {
   color: red;
   font-weight: bold;
   margin-top: 20px;
+}
+
+/* SeaWeather */
+.seaWea-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 0px 100px 0px;
+  background: linear-gradient(to right, #253bff 25%, #5ca9fb 100%);
+}
+
+.seaWea-container h2 {
+  color: rgb(255, 255, 255);
+  text-align: center;
+}
+
+.seaWea-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three columns */
+  gap: 20px; /* Spacing between items */
+  margin-bottom: 40px; /* Spacing between grid rows */
+}
+
+.seaWea-item {
+  background-color: #fff490; /* Light grey background */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.sea-container {
+  margin-bottom: 40px; /* Spacing below the search bar */
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+button[type="button"] {
+  padding: 10px 20px;
+  background-color: #83ff87a3;
+  color: #000000;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="button"]:hover {
+  background-color: #0056b3;
+}
+
+/* SeaHistory */
+.weaHis-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 0px 100px 0px;
+  background: #ffffff;
 }

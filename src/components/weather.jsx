@@ -61,7 +61,7 @@ const Weather = () => {
       })
       .catch((error) => {
         console.error('Error fetching weather data:', error);
-        setError('Failed to fetch weather data. Please try again later.');
+        //setError('Failed to fetch weather data. Please try again later.');
       });
   }, [map, marker, initializeMap]);
 
@@ -83,6 +83,7 @@ const Weather = () => {
 
   return (
     <div id="weather" className="weather-container">
+      <h2> Weather </h2>
       <div className="map-container" id="map-container">
         <div id="map" className="map"></div>
       </div>

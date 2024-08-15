@@ -33,6 +33,16 @@ export const Navigation = (props) => {
               </a>
             </li>
             <li>
+              <a href="#weasea" className="page-scroll">
+                WSearch
+              </a>
+            </li>
+            <li>
+              <a href="#weahis" className="page-scroll">
+                WHistory
+              </a>
+            </li>
+            <li>
               <a href="#features" className="page-scroll">
                 Features
               </a>
@@ -52,21 +62,11 @@ export const Navigation = (props) => {
                 Gallery
               </a>
             </li>
-            {/*<li>
-              <a href="#testimonials" className="page-scroll">
-                Testimonials
-              </a>
-            </li>*/}
             <li>
               <a href="#team" className="page-scroll">
                 Team
               </a>
             </li>
-            {/*<li>
-              <a href="#weaHistory" className="page-scroll">
-                Weather History
-              </a>
-            </li>*/}
             <li>
               <a href="#contact" className="page-scroll">
                 Contact
