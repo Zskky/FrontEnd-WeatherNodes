@@ -10,6 +10,7 @@ import { Contact } from "./components/contact";
 import Weather from "./components/weather";
 import WeaSea from "./components/weaSea";
 import WeaHis from "./components/weaHis";
+//import WeaHis1 from "./components/weaHis1";
 import FetchWeather from "./components/fetchWeather";
 import JsonData from "./data/data.json";
 import SmoothScroll from "smooth-scroll";
@@ -41,6 +42,7 @@ const App = () => {
       <Weather data={landingPageData.Weather}/>
       <WeaSea data={landingPageData.WeaSea}/>
       <WeaHis data={landingPageData.WeaHis}/>
+      {/*<WeaHis1 data={landingPageData.WeaHis1}/>*/}
       <Features data={landingPageData.Features} />
       <Services data={landingPageData.Services} />
       <About data={landingPageData.About} />

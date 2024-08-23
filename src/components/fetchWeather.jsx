@@ -5,7 +5,7 @@ function FetchWeather() {
   useEffect(() => {
     const apikey = '58c8f6da-98b4-4c4b-bfa7-5b52f09ea139';
     const capital = 'Singapore'; // Replace with the actual capital city
-    const fetchInterval = 12 * 60 * 60 * 1000; // 12 hours
+    const fetchInterval = 1 * 60 * 60 * 1000; // 12 hours
 
     const fetchWeatherData = () => {
       axios
