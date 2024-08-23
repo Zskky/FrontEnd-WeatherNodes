@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 
 const SeaWeather = () => {
@@ -28,7 +28,8 @@ const SeaWeather = () => {
             cloudCover: data.cloudCover || 'N/A',
             precipitation: data.precipitation || 'N/A',
           });
-          console.log('Weather data set:', weatherData); // Log the weather data
+          // Optional: Log the weather data if needed for debugging
+          console.log('Weather data set:', data);
         } else {
           console.error('Invalid response structure:', response.data);
           setError('Invalid weather data response.');
@@ -50,7 +51,7 @@ const SeaWeather = () => {
           setError('Error setting up the request. Please try again.');
         }
       });
-  }, []);
+  }, []);  // Removed unnecessary dependencies
 
   // Event handler for the search button and Enter key
   const handleSearch = (event) => {
