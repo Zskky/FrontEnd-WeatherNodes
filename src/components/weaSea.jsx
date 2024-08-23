@@ -5,6 +5,7 @@ const SeaWeather = () => {
   const [location, setLocation] = useState('');
   const [weatherData, setWeatherData] = useState({});
   const [error, setError] = useState(null);
+  const [isSearch, setIsSearch] = useState(false); // To track if a search has been initiated
 
   // Function to fetch weather data from the API
   const fetchWeatherData = useCallback((capital) => {
@@ -28,8 +29,9 @@ const SeaWeather = () => {
             cloudCover: data.cloudCover || 'N/A',
             precipitation: data.precipitation || 'N/A',
           });
-          // Optional: Log the weather data if needed for debugging
-          console.log('Weather data set:', data);
+
+          setIsSearch(true); // Indicate that a search has been made
+          console.log('Weather data set:', data); // Log the weather data
         } else {
           console.error('Invalid response structure:', response.data);
           setError('Invalid weather data response.');
@@ -51,7 +53,7 @@ const SeaWeather = () => {
           setError('Error setting up the request. Please try again.');
         }
       });
-  }, []);  // Removed unnecessary dependencies
+  }, []);
 
   // Event handler for the search button and Enter key
   const handleSearch = (event) => {
@@ -96,26 +98,28 @@ const SeaWeather = () => {
         </button>
       </div>
       {error && <div className="error">{error}</div>}
-      <div className="seaWea-grid">
-        <div className="seaWea-item">
-          <p>Temperature: {weatherData.temperature !== 'N/A' ? `${weatherData.temperature} °C` : 'N/A'}</p>
+      {isSearch && (
+        <div className="seaWea-grid">
+          <div className="seaWea-item">
+            <p>Temperature: {weatherData.temperature !== 'N/A' ? `${weatherData.temperature} °C` : 'N/A'}</p>
+          </div>
+          <div className="seaWea-item">
+            <p>Humidity: {weatherData.humidity !== 'N/A' ? `${weatherData.humidity} %` : 'N/A'}</p>
+          </div>
+          <div className="seaWea-item">
+            <p>Pressure: {weatherData.pressure !== 'N/A' ? `${weatherData.pressure} hPa` : 'N/A'}</p>
+          </div>
+          <div className="seaWea-item">
+            <p>Wind Speed: {weatherData.windSpeed !== 'N/A' ? `${weatherData.windSpeed} km/h` : 'N/A'}</p>
+          </div>
+          <div className="seaWea-item">
+            <p>Cloud Cover: {weatherData.cloudCover !== 'N/A' ? `${weatherData.cloudCover} %` : 'N/A'}</p>
+          </div>
+          <div className="seaWea-item">
+            <p>Precipitation: {weatherData.precipitation !== 'N/A' ? `${weatherData.precipitation} mm` : 'N/A'}</p>
+          </div>
         </div>
-        <div className="seaWea-item">
-          <p>Humidity: {weatherData.humidity !== 'N/A' ? `${weatherData.humidity} %` : 'N/A'}</p>
-        </div>
-        <div className="seaWea-item">
-          <p>Pressure: {weatherData.pressure !== 'N/A' ? `${weatherData.pressure} hPa` : 'N/A'}</p>
-        </div>
-        <div className="seaWea-item">
-          <p>Wind Speed: {weatherData.windSpeed !== 'N/A' ? `${weatherData.windSpeed} km/h` : 'N/A'}</p>
-        </div>
-        <div className="seaWea-item">
-          <p>Cloud Cover: {weatherData.cloudCover !== 'N/A' ? `${weatherData.cloudCover} %` : 'N/A'}</p>
-        </div>
-        <div className="seaWea-item">
-          <p>Precipitation: {weatherData.precipitation !== 'N/A' ? `${weatherData.precipitation} mm` : 'N/A'}</p>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
