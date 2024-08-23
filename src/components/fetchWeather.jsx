@@ -5,6 +5,7 @@ function FetchWeather() {
   useEffect(() => {
     const apikey = '58c8f6da-98b4-4c4b-bfa7-5b52f09ea139';
     const capital = 'Singapore'; // Replace with the actual capital city
+    const fetchInterval = 12 * 60 * 60 * 1000; // 12 hours
 
     const fetchWeatherData = () => {
       axios
@@ -13,20 +14,36 @@ function FetchWeather() {
         })
         .then(response => {
           console.log('Weather data fetched:', response.data);
+          // Store the timestamp of the last fetch in localStorage
+          localStorage.setItem('lastFetchTime', Date.now().toString());
         })
         .catch(error => {
           console.error('Error fetching weather data:', error);
         });
     };
 
-    // Fetch data immediately on component mount
-    fetchWeatherData();
+    // Check the last fetch time from localStorage
+    const lastFetchTime = parseInt(localStorage.getItem('lastFetchTime'), 10);
+    const currentTime = Date.now();
 
-    // Set an interval to fetch data every 12 hours (12 hours * 60 minutes * 60 seconds * 1000 milliseconds)
-    const intervalId = setInterval(fetchWeatherData, 12 * 60 *  60 * 1000);
+    // Calculate the time until the next fetch based on the last fetch time
+    let timeUntilNextFetch = fetchInterval;
 
-    // Clean up the interval on component unmount
-    return () => clearInterval(intervalId);
+    if (lastFetchTime && currentTime - lastFetchTime < fetchInterval) {
+      timeUntilNextFetch = fetchInterval - (currentTime - lastFetchTime);
+    }
+
+    // Set a timeout to fetch data at the calculated time
+    const timeoutId = setTimeout(() => {
+      fetchWeatherData();
+      // After the initial timeout, set the regular interval
+      const intervalId = setInterval(fetchWeatherData, fetchInterval);
+      // Clear the interval if the component unmounts
+      return () => clearInterval(intervalId);
+    }, timeUntilNextFetch);
+
+    // Clean up the timeout on component unmount
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return <div>Weather data fetcher is running in the background.</div>;

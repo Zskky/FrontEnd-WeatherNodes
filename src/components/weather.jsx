@@ -11,21 +11,22 @@ const Weather = () => {
   const [error, setError] = useState(null);
   const [localTime, setLocalTime] = useState('');
 
-  const initializeMap = useCallback((lat, lon) => {
-    if (!map) {
-      const newMap = L.map('map').setView([lat, lon], 13);
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      }).addTo(newMap);
+  // Function to initialize the map
+  useEffect(() => {
+    const lat = 1.3521; // Latitude for Singapore
+    const lon = 103.8198; // Longitude for Singapore
+    const newMap = L.map('map').setView([lat, lon], 13);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(newMap);
+    const newMarker = L.marker([lat, lon]).addTo(newMap);
+    setMap(newMap);
+    setMarker(newMarker);
+  }, []);
 
-      const newMarker = L.marker([lat, lon]).addTo(newMap);
-      setMap(newMap);
-      setMarker(newMarker);
-    }
-  }, [map]);
-
-  const fetchWeatherData = useCallback((capital) => {
+  // Function to fetch weather data from the API
+  const fetchWeatherData = useCallback(() => {
     axios
       .get(`https://ibas.azurewebsites.net/fetch-only`, {
         params: { capital, apikey: '58c8f6da-98b4-4c4b-bfa7-5b52f09ea139' }
@@ -46,14 +47,10 @@ const Weather = () => {
             precipitation: data.precipitation || 'N/A',
           });
 
-          // Manually set lat/lon for the map if it's not returned by the API
-          const lat = 1.3521; // Example latitude for Singapore
-          const lon = 103.8198; // Example longitude for Singapore
+          // Update the map marker position if necessary
           if (marker) {
-            marker.setLatLng([lat, lon]).update();
-            map.setView([lat, lon]);
-          } else {
-            initializeMap(lat, lon);
+            marker.setLatLng([1.3521, 103.8198]).update();
+            map.setView([1.3521, 103.8198]);
           }
         } else {
           setError('Invalid weather data response.');
@@ -61,13 +58,13 @@ const Weather = () => {
       })
       .catch((error) => {
         console.error('Error fetching weather data:', error);
-        //setError('Failed to fetch weather data. Please try again later.');
+        setError('Failed to fetch weather data. Please try again later.');
       });
-  }, [map, marker, initializeMap]);
+  }, [capital, marker, map]);
 
   useEffect(() => {
-    // Fetch weather data for the hard-coded capital
-    fetchWeatherData(capital);
+    // Fetch weather data when the component mounts
+    fetchWeatherData();
 
     const updateLocalTime = () => {
       const now = new Date();
@@ -79,7 +76,7 @@ const Weather = () => {
     const intervalId = setInterval(updateLocalTime, 1000);
 
     return () => clearInterval(intervalId);
-  }, [capital, fetchWeatherData]);
+  }, [fetchWeatherData]);
 
   return (
     <div id="weather" className="weather-container">
