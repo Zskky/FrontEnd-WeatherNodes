@@ -725,3 +725,18 @@ button[type="button"]:hover {
 .weaHis-container .field-buttons button:active {
   background-color: #1aff1e;
 }
+
+.weaHis-container .data-limit-selector {
+  display: flex;
+  justify-content: center; /* Centers the buttons horizontally */
+  flex-wrap: wrap; /* Allows buttons to wrap onto the next line if needed */
+  gap: 10px; /* Adds space between the buttons */
+  margin-top: 20px; /* Adds space above the button container */
+}
+
+.weaHis-container .data-limit-selector label {
+  margin-right: 5px; /* Adds space between the label and the dropdown */
+  font-weight: bold; /* Makes the label text bold */
+  display: inline-block; /* Ensures label takes up only the necessary space */
+  vertical-align: middle; /* Vertically aligns label with the dropdown */
+}

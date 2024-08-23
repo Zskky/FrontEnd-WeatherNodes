@@ -14,6 +14,9 @@ const WeatherHistory = () => {
     precipitation: true,
   }); // New state to track which fields are active
 
+  // Default limit to 15 data points
+  const [dataLimit, setDataLimit] = useState(10);
+
   const fetchHistoricalData = useCallback(() => {
     axios
       .get(`https://ibas.azurewebsites.net/get-historical-data`, {
@@ -56,7 +59,7 @@ const WeatherHistory = () => {
   };
 
   // Limit to the last 10-15 data points
-  const limitD = historicalData.slice(-40);
+  const limitD = historicalData.slice(-dataLimit);
 
   return (
     <div id="weaHis" className="weaHis-container">
@@ -99,6 +102,22 @@ const WeatherHistory = () => {
         <button onClick={() => toggleField('precipitation')}>
           {activeFields.precipitation ? 'Hide' : 'Show'} Precipitation
         </button>
+      </div>
+
+      {/* Dropdown to select data limit */}
+      <div className="data-limit-selector">
+        <label htmlFor="dataLimit">Select number of data points:</label>
+        <select 
+          id="dataLimit" 
+          value={dataLimit} 
+          onChange={(e) => setDataLimit(Number(e.target.value))}
+        >
+          <option value={5}>5</option>
+          <option value={10}>10</option>
+          <option value={15}>15</option>
+          <option value={20}>20</option>
+          <option value={25}>25</option>
+        </select>
       </div>
     </div>
   );
