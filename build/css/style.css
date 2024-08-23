@@ -700,3 +700,28 @@ button[type="button"]:hover {
   padding: 100px 0px 100px 0px;
   background: #ffffff;
 }
+
+.weaHis-container .field-buttons {
+  display: flex;
+  justify-content: center; /* Centers the buttons horizontally */
+  flex-wrap: wrap; /* Allows buttons to wrap onto the next line if needed */
+  gap: 10px; /* Adds space between the buttons */
+  margin-top: 20px; /* Adds space above the button container */
+}
+
+.weaHis-container .field-buttons button {
+  padding: 10px 20px; /* Adds padding inside the buttons */
+  background-color: #f0f0f0; /* Button background color */
+  border: 1px solid #ccc; /* Button border */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Changes cursor to pointer on hover */
+  transition: background-color 0.3s; /* Smooth background color change on hover */
+}
+
+.weaHis-container .field-buttons button:hover {
+  background-color: #ddd; /* Button background color on hover */
+}
+
+.weaHis-container .field-buttons button:active {
+  background-color: #1aff1e;
+}

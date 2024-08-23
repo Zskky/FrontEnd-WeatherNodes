@@ -5,6 +5,14 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 const WeatherHistory = () => {
   const [historicalData, setHistoricalData] = useState([]);
   const [error, setError] = useState(null);
+  const [activeFields, setActiveFields] = useState({
+    temperature: true,
+    humidity: true,
+    pressure: true,
+    windSpeed: true,
+    cloudCover: true,
+    precipitation: true,
+  }); // New state to track which fields are active
 
   const fetchHistoricalData = useCallback(() => {
     axios
@@ -39,27 +47,56 @@ const WeatherHistory = () => {
     fetchHistoricalData();
   }, [fetchHistoricalData]);
 
-  const limitedData = historicalData.slice(-10); // Limit to last 20 data points
+  // Function to toggle field visibility
+  const toggleField = (field) => {
+    setActiveFields((prevState) => ({
+      ...prevState,
+      [field]: !prevState[field],
+    }));
+  };
 
   return (
     <div id="weaHis" className="weaHis-container">
-        <h2>Weather History</h2>
+      <h2>Weather History</h2>
       {error && <div className="error">{error}</div>}
+
       <ResponsiveContainer width="100%" height={500}>
-        <LineChart data={limitedData}>
+        <LineChart data={historicalData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="timestamp" tickCount={5} />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="temperature" stroke="#8884d8" />
-          <Line type="monotone" dataKey="humidity" stroke="#82ca9d" />
-          <Line type="monotone" dataKey="pressure" stroke="#ffc658" />
-          <Line type="monotone" dataKey="windSpeed" stroke="#ff7300" />
-          <Line type="monotone" dataKey="cloudCover" stroke="#00C49F" />
-          <Line type="monotone" dataKey="precipitation" stroke="#FF8042" />
+          {activeFields.temperature && <Line type="monotone" dataKey="temperature" stroke="#8884d8" />}
+          {activeFields.humidity && <Line type="monotone" dataKey="humidity" stroke="#82ca9d" />}
+          {activeFields.pressure && <Line type="monotone" dataKey="pressure" stroke="#ffc658" />}
+          {activeFields.windSpeed && <Line type="monotone" dataKey="windSpeed" stroke="#ff7300" />}
+          {activeFields.cloudCover && <Line type="monotone" dataKey="cloudCover" stroke="#00C49F" />}
+          {activeFields.precipitation && <Line type="monotone" dataKey="precipitation" stroke="#A9A9A9" />}
         </LineChart>
       </ResponsiveContainer>
+
+      {/* Buttons to toggle field visibility */}
+      <div className="field-buttons">
+        <button onClick={() => toggleField('temperature')}>
+          {activeFields.temperature ? 'Hide' : 'Show'} Temperature
+        </button>
+        <button onClick={() => toggleField('humidity')}>
+          {activeFields.humidity ? 'Hide' : 'Show'} Humidity
+        </button>
+        <button onClick={() => toggleField('pressure')}>
+          {activeFields.pressure ? 'Hide' : 'Show'} Pressure
+        </button>
+        <button onClick={() => toggleField('windSpeed')}>
+          {activeFields.windSpeed ? 'Hide' : 'Show'} Wind Speed
+        </button>
+        <button onClick={() => toggleField('cloudCover')}>
+          {activeFields.cloudCover ? 'Hide' : 'Show'} Cloud Cover
+        </button>
+        <button onClick={() => toggleField('precipitation')}>
+          {activeFields.precipitation ? 'Hide' : 'Show'} Precipitation
+        </button>
+      </div>
     </div>
   );
 };
