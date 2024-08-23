@@ -16,7 +16,7 @@ const SeaWeather = () => {
       })
       .then((response) => {
         console.log('API response:', response.data); // Log the entire response for debugging
-        
+
         if (response.data.valid) {  // Check if the response is valid
           console.log('Valid response received. Processing data.');
           const data = response.data.averages;  // Access the averages object
@@ -29,6 +29,7 @@ const SeaWeather = () => {
             cloudCover: data.cloudCover || 'N/A',
             precipitation: data.precipitation || 'N/A',
           });
+          console.log('Weather data set:', weatherData); // Log the weather data
         } else {
           console.error('Invalid response structure:', response.data);
           setError('Invalid weather data response.');
@@ -64,6 +65,7 @@ const SeaWeather = () => {
     }
 
     setError(null); // Clear any previous errors
+    console.log('Initiating fetchWeatherData with location:', location);
     fetchWeatherData(location);
   };
 
@@ -76,7 +78,10 @@ const SeaWeather = () => {
           id="location-input"
           placeholder="Enter capital city"
           value={location}
-          onChange={(e) => setLocation(e.target.value)}
+          onChange={(e) => {
+            console.log('Location input changed:', e.target.value); // Log location changes
+            setLocation(e.target.value);
+          }}
         />
         <button type="button" id="search-button" onClick={handleSearch}>
           Search
