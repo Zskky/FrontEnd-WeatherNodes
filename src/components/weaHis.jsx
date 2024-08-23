@@ -55,13 +55,16 @@ const WeatherHistory = () => {
     }));
   };
 
+  // Limit to the last 10-15 data points
+  const limitD = historicalData.slice(-40);
+
   return (
     <div id="weaHis" className="weaHis-container">
       <h2>Weather History</h2>
       {error && <div className="error">{error}</div>}
 
       <ResponsiveContainer width="100%" height={500}>
-        <LineChart data={historicalData}>
+        <LineChart data={limitD}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="timestamp" tickCount={5} />
           <YAxis />

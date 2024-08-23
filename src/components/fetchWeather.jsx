@@ -5,7 +5,7 @@ function FetchWeather() {
   useEffect(() => {
     const apikey = '58c8f6da-98b4-4c4b-bfa7-5b52f09ea139';
     const capital = 'Singapore'; // Replace with the actual capital city
-    const fetchInterval = 1 * 60 * 60 * 1000; // 12 hours
+    const fetchInterval = 1 * 60 * 60 * 1000; // 1 hour
 
     const fetchWeatherData = () => {
       axios
@@ -14,36 +14,31 @@ function FetchWeather() {
         })
         .then(response => {
           console.log('Weather data fetched:', response.data);
-          // Store the timestamp of the last fetch in localStorage
           localStorage.setItem('lastFetchTime', Date.now().toString());
         })
         .catch(error => {
-          console.error('Error fetching weather data:', error);
+          console.error('Error fetching weather data:', error.response || error);
         });
     };
 
-    // Check the last fetch time from localStorage
+    // Get the last fetch time from localStorage
     const lastFetchTime = parseInt(localStorage.getItem('lastFetchTime'), 10);
     const currentTime = Date.now();
 
-    // Calculate the time until the next fetch based on the last fetch time
-    let timeUntilNextFetch = fetchInterval;
-
-    if (lastFetchTime && currentTime - lastFetchTime < fetchInterval) {
-      timeUntilNextFetch = fetchInterval - (currentTime - lastFetchTime);
+    // Check if it's been more than an hour since the last fetch
+    if (!lastFetchTime || currentTime - lastFetchTime >= fetchInterval) {
+      fetchWeatherData();
+    } else {
+      console.log('Weather data was recently fetched. Waiting for the next interval.');
     }
 
-    // Set a timeout to fetch data at the calculated time
-    const timeoutId = setTimeout(() => {
+    // Set up the interval to fetch weather data every hour
+    const intervalId = setInterval(() => {
       fetchWeatherData();
-      // After the initial timeout, set the regular interval
-      const intervalId = setInterval(fetchWeatherData, fetchInterval);
-      // Clear the interval if the component unmounts
-      return () => clearInterval(intervalId);
-    }, timeUntilNextFetch);
+    }, fetchInterval);
 
-    // Clean up the timeout on component unmount
-    return () => clearTimeout(timeoutId);
+    // Clear interval on component unmount
+    return () => clearInterval(intervalId);
   }, []);
 
   return <div>Weather data fetcher is running in the background.</div>;
