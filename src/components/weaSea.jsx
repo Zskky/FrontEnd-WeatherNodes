@@ -5,7 +5,6 @@ const SeaWeather = () => {
   const [location, setLocation] = useState('');
   const [weatherData, setWeatherData] = useState({});
   const [error, setError] = useState(null);
-  const [localTime, setLocalTime] = useState('');
 
   // Function to fetch weather data from the API
   const fetchWeatherData = useCallback((capital) => {
@@ -53,10 +52,10 @@ const SeaWeather = () => {
       });
   }, []);
 
-  // Event handler for the search button
+  // Event handler for the search button and Enter key
   const handleSearch = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
-    console.log('Search button clicked. Location:', location); // Log the location
+    console.log('Search triggered. Location:', location); // Log the location
 
     if (location.trim() === '') {
       console.warn('Invalid input: No capital city entered.');
@@ -67,6 +66,13 @@ const SeaWeather = () => {
     setError(null); // Clear any previous errors
     console.log('Initiating fetchWeatherData with location:', location);
     fetchWeatherData(location);
+  };
+
+  // Event handler for Enter key press in the input field
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch(event);
+    }
   };
 
   return (
@@ -82,6 +88,7 @@ const SeaWeather = () => {
             console.log('Location input changed:', e.target.value); // Log location changes
             setLocation(e.target.value);
           }}
+          onKeyPress={handleKeyPress} // Trigger search on Enter key press
         />
         <button type="button" id="search-button" onClick={handleSearch}>
           Search
