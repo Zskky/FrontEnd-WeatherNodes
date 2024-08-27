@@ -36,7 +36,7 @@ jobs:
           name: node-app
           path: release.zip
 
-  deploy:
+  deploy: #deployed is called
     runs-on: ubuntu-latest
     needs: build
     environment:
