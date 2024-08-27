@@ -54,17 +54,17 @@ jobs:
       - name: Unzip build artifact
         run: unzip build.zip
 
-      - name: Login to Azure
+        - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_5F30C81DBEAE41D2A80C1B83E6BA5D05}}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6D92CC9ACAEF49E1A028A05ACC7156A6}}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_792C41D5FDE945E7A32E791B2199AC7D}}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_B59D12688B16437CBF53E44188BCA77B }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2E061E2C2FA14A35812275B681E49F57 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_84C34A82490E4A6A9802675DD5919812 }}
 
-      - name: "Deploy to Azure Web App"
+      - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: "WeatherNodesInitiative"
-          slot-name: "Production"
-          package: ./
+          app-name: 'weatherNodesInitiatives'
+          slot-name: 'Production'
+          package: 
